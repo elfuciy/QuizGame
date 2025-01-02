@@ -30,7 +30,7 @@ class MainController: UIViewController {
         collection.register(UINib(nibName: "TitleCell", bundle: nil), forCellWithReuseIdentifier: "TitleCell")
 
         collection.collectionViewLayout = createLayout()
-            
+        getData()
     }
     
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -51,6 +51,7 @@ class MainController: UIViewController {
     func getData() {
         category.fetch { result in
             categoryArray = result
+            print(result)
         }
     }
 }
@@ -61,7 +62,7 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
         case .headSection:
             return 1
         case .category:
-            return 4
+            return categoryArray.count
         case .sectionTitle:
             return 1
         case .items:
@@ -77,6 +78,7 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
             return cell
         case .category:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
+            cell.configure(category: categoryArray[indexPath.row])
             return cell
         case .sectionTitle:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TitleCell", for: indexPath) as! TitleCell

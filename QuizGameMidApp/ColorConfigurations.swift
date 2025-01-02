@@ -30,7 +30,7 @@ class ColorConfigurations {
         let chapterShapeLayer = CAShapeLayer()
         chapterShapeLayer.path = circlePath.cgPath
         chapterShapeLayer.fillColor = UIColor.clear.cgColor
-        chapterShapeLayer.strokeColor = UIColor.red.cgColor
+        chapterShapeLayer.strokeColor = UIColor(named: "topPurple")?.cgColor
         chapterShapeLayer.lineWidth = 2
         view.layer.addSublayer(chapterShapeLayer)
     }

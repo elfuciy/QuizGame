@@ -28,7 +28,7 @@ class LoginController: UIViewController {
             UserDefaults.standard.set(true, forKey: "isLoggedIn")
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-            sceneDelegate.game()
+//            sceneDelegate.game()
         } else {
             errorLabel.isHidden = false
             errorLabel.text = "Fill all fields"
