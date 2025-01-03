@@ -2,7 +2,7 @@
 //  Questions+CoreDataProperties.swift
 //  QuizGameMidApp
 //
-//  Created by Elsever on 02.01.25.
+//  Created by Elsever on 03.01.25.
 //
 //
 
@@ -16,11 +16,12 @@ extension Questions {
         return NSFetchRequest<Questions>(entityName: "Questions")
     }
 
-    @NSManaged public var question: String?
-    @NSManaged public var isAnswered: Bool
     @NSManaged public var answer: String?
-    @NSManaged public var poitns: Int16
     @NSManaged public var category: String?
+    @NSManaged public var isAnswered: Bool
+    @NSManaged public var poitns: Int16
+    @NSManaged public var question: String?
+    @NSManaged public var id: Int16
 
 }
 

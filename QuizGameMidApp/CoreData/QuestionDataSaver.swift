@@ -23,10 +23,20 @@ class QuestionDataClass {
         data.answer = question.answer
         data.poitns = question.points ?? 0
         data.category = question.category
+        data.id = question.id ?? 0
         do {
             try context.save()
         } catch {
             print(error.localizedDescription)
+        }
+    }
+    
+    func updating(question: QuestionsModel) {
+        let data = Questions(context: context)
+        items.forEach {
+            if data.question == $0.question {
+                data.isAnswered = question.isAnswered ?? true
+            }
         }
     }
         

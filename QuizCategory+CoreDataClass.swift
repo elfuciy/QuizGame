@@ -2,7 +2,7 @@
 //  QuizCategory+CoreDataClass.swift
 //  QuizGameMidApp
 //
-//  Created by Elsever on 31.12.24.
+//  Created by Elsever on 03.01.25.
 //
 //
 

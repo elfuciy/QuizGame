@@ -21,7 +21,7 @@ class CategoryData {
         data.category = category.category
         data.categoryColor = category.categoryColor
         data.categoryImage = category.categoryimage
-        
+        data.percent = category.percent ?? 0
         do {
             try context.save()
         } catch {

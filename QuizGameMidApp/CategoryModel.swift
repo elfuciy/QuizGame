@@ -11,6 +11,7 @@ struct CategoryModel {
     let category: String?
     let categoryColor: String?
     let categoryimage: String?
+    let percent: Double?
 }
 struct QuestionsModel {
     let answer: String?
@@ -18,6 +19,7 @@ struct QuestionsModel {
     let points: Int16?
     let question: String?
     let category: String?
+    let id: Int16?
 }
 
 struct OptionsModel {

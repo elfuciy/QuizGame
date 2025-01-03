@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class QuizController: UIViewController {
 
@@ -23,26 +24,23 @@ class QuizController: UIViewController {
     @IBOutlet weak var secondOption: UILabel!
     @IBOutlet weak var thirdOption: UILabel!
     
+    var context = AppDelegate().persistentContainer.viewContext
+
     var questions = QuestionDataClass(context: AppDelegate().persistentContainer.viewContext)
     var options = OptionsDataClass(context: AppDelegate().persistentContainer.viewContext)
+    var category = CategoryData(context: AppDelegate().persistentContainer.viewContext)
     var optionsArray = [OptionsData]()
     var questionArray = [Questions]()
+    var categoryArray = [QuizCategory]()
     var count = 0
+    var percent: Double = 0
     var timer: Timer = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        ColorConfigurations().backgroundColor(view)
-        
-        questions.fetching { question in
-            questionArray = question
-        }
-        
-        options.fetch { options in
-            optionsArray = options
-        }
-
+        getData()
+        check()
         quizStart(category: "Sport Quiz")
     }
     
@@ -63,37 +61,56 @@ class QuizController: UIViewController {
 }
 
 extension QuizController {
+    
+    func getData() {
+        questions.fetching { question in
+            questionArray = question
+            questionArray.sort { $0.id < $1.id }
+        }
+        
+        options.fetch { options in
+            optionsArray = options
+        }
+    }
+    
     func configure() {
+        ColorConfigurations().backgroundColor(view)
         buttonView.isHidden = true
         buttonViewShade.isHidden = true
     }
     
-    func quizStart(category: String) {
-        questionNum.text = "Question \(count + 1) of \(questionArray.count)"
-        if questionArray[count].category == category && optionsArray[count].category == category {
-            question.text = questionArray[count].question
-            firstOption.text = optionsArray[count].options
-            secondOption.text = optionsArray[count].option2
-            thirdOption.text = optionsArray[count].option3
-        }
-        print(question.text ?? "")
-        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(doThis), userInfo: nil, repeats: false)
-        reset()
-    }
-    
-    @objc func doThis() {
-        if !questionArray[count].isAnswered {
-            questionArray[count].isAnswered = true
-            firstOptionView.isHidden = true
-            firstOptionViewShade.isHidden = true
-            thirdOptionView.isHidden = true
-            thirdOptionViewShade.isHidden = true
-            buttonView.isHidden = false
-            buttonViewShade.isHidden = false
-            secondOptionView.isUserInteractionEnabled = false
+    func check() {
+        while questionArray[count].isAnswered {
             count += 1
         }
-        
+    }
+    func quizStart(category: String) {
+            if !questionArray[count].isAnswered {
+                questionNum.text = "Question \(count + 1) of \(questionArray.count)"
+                if questionArray[count].category == category && optionsArray[count].category == category {
+                    question.text = questionArray[count].question
+                    firstOption.text = optionsArray[count].options
+                    secondOption.text = optionsArray[count].option2
+                    thirdOption.text = optionsArray[count].option3
+                }
+                print(question.text ?? "")
+                timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(doThis), userInfo: nil, repeats: false)
+                reset()
+            }
+    }
+//    нужно обновить базу данных для сохранения isAnswered
+//    можно задать в базе данных то сколько % уже сделано чтобы не выcчитывать каждый раз
+    @objc func doThis() {
+        hide()
+        buttonView.isHidden = false
+        buttonViewShade.isHidden = false
+        secondOptionView.isUserInteractionEnabled = false
+        secondOption.text = questionArray[count].answer
+        questionArray[count].isAnswered = true
+        updating()
+        upd()
+        count += 1
+
     }
     
     @IBAction func nextQuestion(_ sender: Any) {
@@ -104,31 +121,29 @@ extension QuizController {
     
     func answerReveal(answer: String) {
         if answer == questionArray[count].answer {
-            firstOptionView.isHidden = true
-            firstOptionViewShade.isHidden = true
-            thirdOptionView.isHidden = true
-            thirdOptionViewShade.isHidden = true
+            hide()
             secondOption.textColor = UIColor.green
             secondOption.text = "Correct"
             questionArray[count].isAnswered = true
             buttonView.isHidden = false
             buttonViewShade.isHidden = false
-            count += 1
+            secondOption.text = questionArray[count].answer
 
         } else {
-            firstOptionView.isHidden = true
-            firstOptionViewShade.isHidden = true
-            thirdOptionView.isHidden = true
-            thirdOptionViewShade.isHidden = true
+            hide()
             secondOption.textColor = UIColor.red
             secondOption.text = "Wrong"
             questionArray[count].isAnswered = true
             buttonView.isHidden = false
             buttonViewShade.isHidden = false
-            count += 1
+            secondOption.text = questionArray[count].answer
 
         }
         timer.invalidate()
+        questionArray[count].isAnswered = true
+        updating()
+        upd()
+        count += 1
         secondOptionView.isUserInteractionEnabled = false
 
     }
@@ -142,5 +157,88 @@ extension QuizController {
         buttonView.isHidden = true
         buttonViewShade.isHidden = true
         secondOption.textColor = UIColor.label
+    }
+    
+    func hide() {
+        firstOptionView.isHidden = true
+        firstOptionViewShade.isHidden = true
+        thirdOptionView.isHidden = true
+        thirdOptionViewShade.isHidden = true
+    }
+    
+
+    
+    
+    func updating() {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Questions")
+            let predicate = NSPredicate(format: "question = '\(questionArray[count].question ?? "")'")
+            fetchRequest.predicate = predicate
+            do
+            {
+                let object = try context.fetch(fetchRequest)
+                if object.count == 1
+                {
+                    let objectUpdate = object.first as! NSManagedObject
+                    objectUpdate.setValue(true, forKey: "isAnswered")
+                    do{
+                        try context.save()
+                    }
+                    catch
+                    {
+                        print(error)
+                    }
+                }
+            }
+            catch
+            {
+                print(error)
+            }
+        questions.fetching { question in
+            questionArray = question
+            questionArray.sort { $0.id < $1.id }
+        }
+        print(questionArray[count].isAnswered)
+    }
+    
+    func upd() {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "QuizCategory")
+            let predicate = NSPredicate(format: "category = 'Sport Quiz'")
+            fetchRequest.predicate = predicate
+            do
+            {
+                let object = try context.fetch(fetchRequest)
+                if object.count == 1
+                {
+                    let objectUpdate = object.first as! NSManagedObject
+                    objectUpdate.setValue(calculate(), forKey: "percent")
+                    do{
+                        try context.save()
+                    }
+                    catch
+                    {
+                        print(error)
+                    }
+                }
+            }
+            catch
+            {
+                print(error)
+            }
+        category.fetch { category in
+            categoryArray = category
+        }
+        for index in 0..<categoryArray.count {
+            print(categoryArray[index].percent)
+        }
+        print(calculate())
+
+    }
+    
+    func calculate() -> Double {
+        percent = Double(count + 1) / Double(questionArray.count)
+        print("count: \(count)")
+        print("ccccc:\(questionArray.count)")
+        print("ffffff \(percent)")
+        return percent * 2
     }
 }
