@@ -15,13 +15,5 @@ class QuizModelVIew {
     var count = 0
     var timer: Timer = Timer()
     
-    func getData() {
-        questions.fetching { question in
-            questionArray = question
-        }
-        
-        options.fetch { options in
-            optionsArray = options
-        }
-    }
+   
 }

@@ -43,7 +43,6 @@ class QuizController: UIViewController {
         check()
         quizStart(category: "Sport Quiz")
     }
-    
 
     @IBAction func firstSelected(_ sender: Any) {
         answerReveal(answer: optionsArray[count].options ?? "")
@@ -57,7 +56,6 @@ class QuizController: UIViewController {
         answerReveal(answer: optionsArray[count].option3 ?? "")
 
     }
-
 }
 
 extension QuizController {
@@ -85,18 +83,18 @@ extension QuizController {
         }
     }
     func quizStart(category: String) {
-            if !questionArray[count].isAnswered {
-                questionNum.text = "Question \(count + 1) of \(questionArray.count)"
-                if questionArray[count].category == category && optionsArray[count].category == category {
-                    question.text = questionArray[count].question
-                    firstOption.text = optionsArray[count].options
-                    secondOption.text = optionsArray[count].option2
-                    thirdOption.text = optionsArray[count].option3
-                }
-                print(question.text ?? "")
-                timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(doThis), userInfo: nil, repeats: false)
-                reset()
+        if !questionArray[count].isAnswered {
+            questionNum.text = "Question \(count + 1) of \(questionArray.count)"
+            if questionArray[count].category == category && optionsArray[count].category == category {
+                question.text = questionArray[count].question
+                firstOption.text = optionsArray[count].options
+                secondOption.text = optionsArray[count].option2
+                thirdOption.text = optionsArray[count].option3
             }
+            print(question.text ?? "")
+            timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(doThis), userInfo: nil, repeats: false)
+            reset()
+        }
     }
 //    нужно обновить базу данных для сохранения isAnswered
 //    можно задать в базе данных то сколько % уже сделано чтобы не выcчитывать каждый раз
@@ -105,6 +103,7 @@ extension QuizController {
         buttonView.isHidden = false
         buttonViewShade.isHidden = false
         secondOptionView.isUserInteractionEnabled = false
+        secondOption.textColor = UIColor.red
         secondOption.text = questionArray[count].answer
         questionArray[count].isAnswered = true
         updating()
@@ -127,7 +126,6 @@ extension QuizController {
             questionArray[count].isAnswered = true
             buttonView.isHidden = false
             buttonViewShade.isHidden = false
-            secondOption.text = questionArray[count].answer
 
         } else {
             hide()
@@ -136,8 +134,6 @@ extension QuizController {
             questionArray[count].isAnswered = true
             buttonView.isHidden = false
             buttonViewShade.isHidden = false
-            secondOption.text = questionArray[count].answer
-
         }
         timer.invalidate()
         questionArray[count].isAnswered = true
@@ -165,9 +161,6 @@ extension QuizController {
         thirdOptionView.isHidden = true
         thirdOptionViewShade.isHidden = true
     }
-    
-
-    
     
     func updating() {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "Questions")
@@ -201,44 +194,40 @@ extension QuizController {
     }
     
     func upd() {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "QuizCategory")
-            let predicate = NSPredicate(format: "category = 'Sport Quiz'")
-            fetchRequest.predicate = predicate
-            do
-            {
-                let object = try context.fetch(fetchRequest)
-                if object.count == 1
-                {
-                    let objectUpdate = object.first as! NSManagedObject
-                    objectUpdate.setValue(calculate(), forKey: "percent")
-                    do{
-                        try context.save()
-                    }
-                    catch
-                    {
-                        print(error)
-                    }
-                }
-            }
-            catch
-            {
-                print(error)
-            }
+//        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest.init(entityName: "QuizCategory")
+//        let predicate = NSPredicate(format: "category = 'Sport Quiz'")
+//        fetchRequest.predicate = predicate
+        
+//        do {
+//            let object = try context.fetch(fetchRequest)
+//            if object.count == 1
+//            {
+//                let objectUpdate = object.first as! NSManagedObject
+//                objectUpdate.setValue(calculate(), forKey: "percent")
+//                do {
+//                    try context.save()
+//                } catch {
+//                    print(error)
+//                }
+//            }
+//        } catch {
+//            print(error)
+//        }
+        
+        category.updateCategoryPercent(percent: calculate(), filterText: "Sport Quiz")
+        
         category.fetch { category in
             categoryArray = category
+            for index in 0..<categoryArray.count {
+                print(categoryArray[index].percent)
+            }
+            
+            print(calculate())
         }
-        for index in 0..<categoryArray.count {
-            print(categoryArray[index].percent)
-        }
-        print(calculate())
-
     }
     
     func calculate() -> Double {
         percent = Double(count + 1) / Double(questionArray.count)
-        print("count: \(count)")
-        print("ccccc:\(questionArray.count)")
-        print("ffffff \(percent)")
-        return percent * 2
+        return percent 
     }
 }

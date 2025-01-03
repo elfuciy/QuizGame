@@ -24,8 +24,8 @@ class ColorConfigurations {
         image.image = UIImage(named: name)
     }
     
-    func circle(view: UIView) {
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 328, y: 32), radius: 20, startAngle: 0, endAngle: .pi * 0.4, clockwise: true)
+    func circle(view: UIView, percent: Double) {
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 328, y: 32), radius: 20, startAngle: 0, endAngle: .pi * percent, clockwise: true)
         
         let chapterShapeLayer = CAShapeLayer()
         chapterShapeLayer.path = circlePath.cgPath

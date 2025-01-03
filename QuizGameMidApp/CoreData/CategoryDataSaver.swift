@@ -38,4 +38,14 @@ class CategoryData {
         }
     }
     
+    func updateCategoryPercent(percent: Double, filterText: String) {
+        do {
+            items = try context.fetch(QuizCategory.fetchRequest())
+            let item = items.filter { $0.category == filterText }.first
+            item?.percent = percent
+            try context.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 }

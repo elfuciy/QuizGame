@@ -70,7 +70,11 @@
             </constraints>
             <size key="customSize" width="421" height="70"/>
             <connections>
+                <outlet property="categoryName" destination="Feu-P1-KBQ" id="Wox-I9-xbi"/>
                 <outlet property="cellView" destination="Tfo-sm-AnT" id="ADO-Hu-AvD"/>
+                <outlet property="image" destination="Yd9-Cx-a4N" id="B10-rO-hdr"/>
+                <outlet property="percent" destination="3Ii-Ty-k4j" id="b7k-eZ-8se"/>
+                <outlet property="questionNum" destination="He4-rJ-oJq" id="oJG-V1-TgL"/>
             </connections>
             <point key="canvasLocation" x="422.13740458015263" y="26.760563380281692"/>
         </collectionViewCell>

@@ -33,6 +33,9 @@ class MainController: UIViewController {
         getData()
     }
     
+    func bar() {
+        
+    }
     func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             switch self.sections[sectionIndex] {
@@ -66,7 +69,7 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
         case .sectionTitle:
             return 1
         case .items:
-            return 6
+            return categoryArray.count
         }
     }
     
@@ -85,6 +88,7 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
             return cell
         case .items:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GamesCells", for: indexPath) as! GamesCells
+            cell.configure(category: categoryArray[indexPath.row])
             return cell
         }
     }
