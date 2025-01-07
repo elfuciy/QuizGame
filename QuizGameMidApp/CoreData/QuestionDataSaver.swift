@@ -19,7 +19,6 @@ class QuestionDataClass {
     func saving(question: QuestionsModel) {
         let data = Questions(context: context)
         data.question = question.question
-        data.isAnswered = question.isAnswered ?? false
         data.answer = question.answer
         data.poitns = question.points ?? 0
         data.category = question.category
@@ -28,15 +27,6 @@ class QuestionDataClass {
             try context.save()
         } catch {
             print(error.localizedDescription)
-        }
-    }
-    
-    func updating(question: QuestionsModel) {
-        let data = Questions(context: context)
-        items.forEach {
-            if data.question == $0.question {
-                data.isAnswered = question.isAnswered ?? true
-            }
         }
     }
         
@@ -48,4 +38,15 @@ class QuestionDataClass {
             print(error.localizedDescription)
         }
         }
+    
+//    func updateQustion(filterText: String) {
+//        do {
+//            items = try context.fetch(Questions.fetchRequest())
+//            let item = items.filter { $0.answer == filterText }.first
+//            item?.isAnswered = true
+//            try context.save()
+//        } catch {
+//            print(error.localizedDescription)
+//        }
+//    }
 }

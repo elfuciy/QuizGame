@@ -11,64 +11,45 @@ class LoginController: UIViewController {
     
     @IBOutlet private weak var nameView: UIView!
     @IBOutlet private weak var nameField: UITextField!
-    @IBOutlet private weak var emailField: UITextField!
-    @IBOutlet private weak var emailView: UIView!
     @IBOutlet private weak var errorLabel: UILabel!
     @IBOutlet private weak var login: UIButton!
     
     var colorConfigure = ColorConfigurations()
+    var helper = FileManagerHelper()
+    var userArray = [UserModel]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         colorConfigure.backgroundColor(view)
         errorLabel.isHidden = true
+        
+        helper.readData { user in
+            userArray = user
+        }
     }
     
     @IBAction func login(_ sender: Any) {
-        if let nameField = nameField.text, !nameField.isEmpty, let emailField = emailField.text, !emailField.isEmpty {
-            UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        UserDefaults.standard.set(true, forKey: "isLoggedIn")
+        if let nameField = nameField.text {
+            UserDefaults.standard.set(nameField, forKey: "username")
+            let name = userArray.filter({ $0.username == nameField}).first?.username
+            print(name)
+            if userArray.filter({ $0.username == nameField}).first?.username == nil {
+                DataSaver().dataSave(name: nameField)
+                let user: UserModel = UserModel(username: nameField, point: 0)
+                userArray.append(user)
+                helper.saveData(user: userArray)
+            }
+        
+            
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
-//            sceneDelegate.game()
+            sceneDelegate.startGame()
         } else {
             errorLabel.isHidden = false
-            errorLabel.text = "Fill all fields"
+            errorLabel.text = "Enter You name"
             nameView.layer.borderWidth = 1
             nameView.layer.borderColor = UIColor.red.cgColor
-            emailView.layer.borderWidth = 1
-            emailView.layer.borderColor = UIColor.red.cgColor
-            
-        }
-       
-    }
-    
-    @IBAction func emailCheck(_ sender: Any) {
-        if let email = emailField.text {
-            if let error = invalidateEmail(email) {
-                errorLabel.text = error
-                errorLabel.isHidden = false
-            } else {
-                errorLabel.isHidden = true
-            }
-        }
-        check()
-    }
-    
-    func invalidateEmail(_ value: String) -> String? {
-        let rexExp = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-        let predicate = NSPredicate(format: "SELF MATCHES %@", rexExp)
-        if !predicate.evaluate(with: value) {
-            return "Invalid email"
-        }
-        
-        return nil
-    }
-    
-    func check() {
-        if errorLabel.isHidden {
-            login.isEnabled = true
-        } else {
-            login.isEnabled = false
         }
     }
-    
 }

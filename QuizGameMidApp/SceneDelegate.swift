@@ -17,24 +17,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
-//        window = UIWindow(windowScene: windowScene)
-//        if UserDefaults.standard.bool(forKey: "isLoggedIn") {
-//            game()
-//        } else {
-//            login()
-//        }
-//    }
-//    
-//    func game() {
-//        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TabbarController") as TabbarController
-//        window?.rootViewController = UINavigationController(rootViewController: controller)
-//        window?.makeKeyAndVisible()
-//    }
-//    
-//    func login() {
-//        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WelcomePageController") as! WelcomePageController
-//        window?.rootViewController = UINavigationController(rootViewController: controller)
-//        window?.makeKeyAndVisible()
+        window = UIWindow(windowScene: windowScene)
+        if UserDefaults.standard.bool(forKey: "isLoggedIn") {
+            startGame()
+        } else {
+            welcome()
+        }
+    }
+    
+    func startGame() {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TabbarController") as UITabBarController
+        window?.rootViewController = UINavigationController(rootViewController: controller)
+        window?.makeKeyAndVisible()
+    }
+    
+    func welcome() {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WelcomePageController") as! WelcomePageController
+        window?.rootViewController = UINavigationController(rootViewController: controller)
+        window?.makeKeyAndVisible()
+    }
+    
+    func login() {
+        let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LoginController") as! LoginController
+        window?.rootViewController = UINavigationController(rootViewController: controller)
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

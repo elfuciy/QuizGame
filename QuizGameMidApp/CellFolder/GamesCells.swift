@@ -23,7 +23,7 @@ class GamesCells: UICollectionViewCell {
         percent.text = "\(Int(category.percent * 100))%"
         categoryName.text = category.category
         questionNum.text = "20 Questions"
-        image.image = UIImage(named: category.category ?? "")
-        ColorConfigurations().circle(view: cellView,percent: category.percent * 2)
+//        image.image = UIImage(named: category.category ?? "")
+        ColorConfigurations().circle(view: cellView, percent: category.percent * 2, color: category.categoryColor ?? "", label: percent)
     }
 }

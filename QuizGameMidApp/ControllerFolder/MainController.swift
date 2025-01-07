@@ -10,6 +10,7 @@ import UIKit
 class MainController: UIViewController {
 
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var coinImage: UIImageView!
     
     let category = CategoryData(context: AppDelegate().persistentContainer.viewContext)
     var categoryArray = [QuizCategory]()
@@ -30,11 +31,23 @@ class MainController: UIViewController {
         collection.register(UINib(nibName: "TitleCell", bundle: nil), forCellWithReuseIdentifier: "TitleCell")
 
         collection.collectionViewLayout = createLayout()
+       
+        bar()
         getData()
+
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(logout))
+    }
+    
+    @objc func logout() {
+        UserDefaults.standard.removeObject(forKey: "username")
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        guard let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
+        sceneDelegate.login()
     }
     
     func bar() {
-        
+        coinImage.image = UIImage(named: "coin3")
+        coinImage.layer.masksToBounds = true
     }
     func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
@@ -53,8 +66,7 @@ class MainController: UIViewController {
     
     func getData() {
         category.fetch { result in
-            categoryArray = result
-            print(result)
+            categoryArray = result.filter { $0.user == UserDefaults.standard.string(forKey: "username")}
         }
     }
 }
@@ -97,6 +109,16 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
         sections.count
     }
     
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if sections[indexPath.section] == .items {
+            let controller = storyboard?.instantiateViewController(withIdentifier: "QuizController") as! QuizController
+            controller.callBack = {
+                self.getData()
+            }
+            controller.selectedCategory = categoryArray[indexPath.row].category
+            controller.hidesBottomBarWhenPushed = true
+            navigationController?.show(controller, sender: nil)
+        }
+    }
 }
 

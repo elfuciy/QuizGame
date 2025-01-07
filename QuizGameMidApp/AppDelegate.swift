@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if UserDefaults.standard.bool(forKey: "isSaved") {
             
         } else {
-            DataSaver().dataSave()
+            DataSaver().questionsSave()
         }
         return true
     }

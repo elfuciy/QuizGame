@@ -12,10 +12,11 @@ struct CategoryModel {
     let categoryColor: String?
     let categoryimage: String?
     let percent: Double?
+    let user: String?
+    let countNum: Int16?
 }
 struct QuestionsModel {
     let answer: String?
-    let isAnswered: Bool?
     let points: Int16?
     let question: String?
     let category: String?
@@ -29,3 +30,7 @@ struct OptionsModel {
     let category: String?
 }
 
+struct UserModel: Codable {
+    let username: String?
+    var point: Int?
+}
