@@ -27,11 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func startGame() {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TabbarController") as UITabBarController
-        window?.rootViewController = UINavigationController(rootViewController: controller)
+        window?.rootViewController = controller //UINavigationController(rootViewController: controller)
         window?.makeKeyAndVisible()
     }
     
-    func welcome() {
+    private func welcome() {
         let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "WelcomePageController") as! WelcomePageController
         window?.rootViewController = UINavigationController(rootViewController: controller)
         window?.makeKeyAndVisible()

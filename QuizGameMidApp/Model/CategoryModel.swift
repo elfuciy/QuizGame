@@ -14,6 +14,7 @@ struct CategoryModel {
     let percent: Double?
     let user: String?
     let countNum: Int16?
+    let miniImage: String?
 }
 struct QuestionsModel {
     let answer: String?

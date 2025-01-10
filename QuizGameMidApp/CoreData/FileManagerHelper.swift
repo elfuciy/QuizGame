@@ -8,6 +8,8 @@
 import Foundation
 
 class FileManagerHelper {
+    var userArray = [UserModel]()
+    let username = UserDefaults.standard.string(forKey: "username")
     
     func getFilePath() -> URL {
         let files = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -21,6 +23,7 @@ class FileManagerHelper {
             let data = try JSONEncoder().encode(user)
             let path = getFilePath()
             try data.write(to: path)
+            print(path)
         } catch {
             print(error.localizedDescription)
         }
@@ -28,19 +31,23 @@ class FileManagerHelper {
     
     func readData(completion: (([UserModel]) -> Void)) {
         if let data = try? Data(contentsOf: getFilePath()) {
-            print(data)
             do {
                 let user = try JSONDecoder().decode([UserModel].self, from: data)
                 completion(user)
+                
             } catch {
                 print(error.localizedDescription)
             }
         }
     }
     
-    func updatePoints(user: [UserModel], points: Int) {
-            var userPoints = user.filter { $0.username == UserDefaults.standard.string(forKey: "username")}.first
-            userPoints?.point = points
-            saveData(user: user)
+    func updatePoints(points: Int) {
+        readData { user in
+            userArray = user
+            if let user = userArray.firstIndex(where: {$0.username == username}) {
+                userArray[user].point! += points
+                saveData(user: userArray)
+            }
+        }
     }
 }

@@ -25,21 +25,21 @@
                                 <rect key="frame" x="8" y="8" width="50" height="50"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Feu-P1-KBQ">
-                                <rect key="frame" x="66" y="12" width="347" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="66" y="12" width="347" height="20"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="17"/>
+                                <color key="textColor" red="0.27450980392156865" green="0.33333333333333331" blue="0.4823529411764706" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="He4-rJ-oJq">
-                                <rect key="frame" x="66" y="37" width="347" height="14.333333333333336"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <rect key="frame" x="66" y="36" width="347" height="14"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="12"/>
                                 <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ii-Ty-k4j">
-                                <rect key="frame" x="382.33333333333331" y="27.999999999999996" width="18.666666666666686" height="14.333333333333332"/>
+                                <rect key="frame" x="383.33333333333331" y="28" width="17.666666666666686" height="14"/>
                                 <color key="tintColor" name="bottomPurple"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <fontDescription key="fontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="12"/>
                                 <color key="textColor" name="bottomPurple"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -73,7 +73,7 @@
             <connections>
                 <outlet property="categoryName" destination="Feu-P1-KBQ" id="Wox-I9-xbi"/>
                 <outlet property="cellView" destination="Tfo-sm-AnT" id="ADO-Hu-AvD"/>
-                <outlet property="image" destination="Yd9-Cx-a4N" id="B10-rO-hdr"/>
+                <outlet property="image" destination="Yd9-Cx-a4N" id="DR3-8j-5h3"/>
                 <outlet property="percent" destination="3Ii-Ty-k4j" id="b7k-eZ-8se"/>
                 <outlet property="questionNum" destination="He4-rJ-oJq" id="oJG-V1-TgL"/>
             </connections>
@@ -85,7 +85,7 @@
             <color red="0.17647058823529413" green="0.15686274509803921" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

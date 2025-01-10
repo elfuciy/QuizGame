@@ -8,34 +8,29 @@
 import UIKit
 
 class MainController: UIViewController {
-
-    @IBOutlet weak var collection: UICollectionView!
-    @IBOutlet weak var coinImage: UIImageView!
+    @IBOutlet private weak var collection: UICollectionView!
+    @IBOutlet private weak var coinImage: UIImageView!
+    @IBOutlet private weak var pointsLabel: UILabel!
     
-    let category = CategoryData(context: AppDelegate().persistentContainer.viewContext)
-    var categoryArray = [QuizCategory]()
+    let username = UserDefaults.standard.string(forKey: "username")
+    
     enum HomeSection {
         case category
         case sectionTitle
         case items
         case headSection
     }
-    
+        
+    let category = CategoryData(context: AppDelegate().persistentContainer.viewContext)
+    var categoryArray = [QuizCategory]()
+    var user = [UserModel]()
     let sections: [HomeSection] = [.headSection, .category, .sectionTitle, .items]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        collection.delegate = self
-        collection.dataSource = self
-        collection.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
-        collection.register(UINib(nibName: "GamesCells", bundle: nil), forCellWithReuseIdentifier: "GamesCells")
-        collection.register(UINib(nibName: "TitleCell", bundle: nil), forCellWithReuseIdentifier: "TitleCell")
-
-        collection.collectionViewLayout = createLayout()
-       
-        bar()
+        
         getData()
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(logout))
+        configureUI()
     }
     
     @objc func logout() {
@@ -45,10 +40,38 @@ class MainController: UIViewController {
         sceneDelegate.login()
     }
     
+    func getData() {
+        FileManagerHelper().readData(completion: { result in
+            user = result.filter( { $0.username == username })
+        })
+        
+        category.fetch { result in
+            categoryArray.removeAll()
+            categoryArray = result.filter { $0.user == username }
+            categoryArray.sort {$0.percent > $1.percent}
+            print(categoryArray.filter { $0.user == username })
+            collection.reloadData()
+        }
+    }
+    
+    func configureUI() {
+        collection.delegate = self
+        collection.dataSource = self
+        collection.register(UINib(nibName: "CategoryCell", bundle: nil), forCellWithReuseIdentifier: "CategoryCell")
+        collection.register(UINib(nibName: "GamesCells", bundle: nil), forCellWithReuseIdentifier: "GamesCells")
+        collection.register(UINib(nibName: "TitleCell", bundle: nil), forCellWithReuseIdentifier: "TitleCell")
+        collection.collectionViewLayout = createLayout()
+        
+        bar()
+    }
+    
     func bar() {
         coinImage.image = UIImage(named: "coin3")
         coinImage.layer.masksToBounds = true
+        pointsLabel.text = "\(user[0].point ?? 0)"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .close, target: self, action: #selector(logout))
     }
+    
     func createLayout() -> UICollectionViewCompositionalLayout {
         UICollectionViewCompositionalLayout { sectionIndex, layoutEnviroment in
             switch self.sections[sectionIndex] {
@@ -63,24 +86,14 @@ class MainController: UIViewController {
             }
         }
     }
-    
-    func getData() {
-        category.fetch { result in
-            categoryArray = result.filter { $0.user == UserDefaults.standard.string(forKey: "username")}
-        }
-    }
 }
 
 extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch sections[section] {
-        case .headSection:
+        case .headSection, .sectionTitle:
             return 1
-        case .category:
-            return categoryArray.count
-        case .sectionTitle:
-            return 1
-        case .items:
+        case .category, .items:
             return categoryArray.count
         }
     }
@@ -94,6 +107,9 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
         case .category:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CategoryCell", for: indexPath) as! CategoryCell
             cell.configure(category: categoryArray[indexPath.row])
+            cell.layer.cornerRadius = 12
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = UIColor.systemGray6.cgColor
             return cell
         case .sectionTitle:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TitleCell", for: indexPath) as! TitleCell
@@ -101,6 +117,9 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
         case .items:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GamesCells", for: indexPath) as! GamesCells
             cell.configure(category: categoryArray[indexPath.row])
+            cell.layer.cornerRadius = 12
+            cell.layer.borderWidth = 1
+            cell.layer.borderColor = UIColor.systemGray6.cgColor
             return cell
         }
     }
@@ -112,8 +131,10 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if sections[indexPath.section] == .items {
             let controller = storyboard?.instantiateViewController(withIdentifier: "QuizController") as! QuizController
-            controller.callBack = {
-                self.getData()
+            controller.callBack = { category in
+                self.categoryArray = category
+                self.navigationItem.rightBarButtonItem?.customView?.reloadInputViews()
+                collectionView.reloadData()
             }
             controller.selectedCategory = categoryArray[indexPath.row].category
             controller.hidesBottomBarWhenPushed = true
@@ -121,4 +142,3 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
         }
     }
 }
-

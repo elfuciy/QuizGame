@@ -24,7 +24,7 @@ class ColorConfigurations {
         image.image = UIImage(named: name)
     }
     
-    func circle(view: UIView, percent: Double, color: String, label: UILabel) {
+    func circle(view: UIView, percent: Double, color: String) {
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: 327, y: 32), radius: 20, startAngle: 0, endAngle: .pi * percent, clockwise: true)
         let circlePathShade = UIBezierPath(arcCenter: CGPoint(x: 327, y: 32), radius: 20, startAngle: 0, endAngle: .pi * 2, clockwise: true)
         
@@ -45,13 +45,41 @@ class ColorConfigurations {
        
     }
     
-    func line(view: UIView) {
-        let path = UIBezierPath(cgPath: UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 100, height: 1), cornerRadius: 1).cgPath)
+    func line(view: UIView, percent: Double, color: String) {
+        let shadowPath = UIBezierPath(cgPath: UIBezierPath(roundedRect: CGRect(x: 90, y: 170, width: 85, height: 4), cornerRadius: 1).cgPath)
+        let path = UIBezierPath(cgPath: UIBezierPath(roundedRect: CGRect(x: 90, y: 170, width: 85 * percent, height: 4), cornerRadius: 1).cgPath)
+        
+        
+        let shapeShadowLayer = CAShapeLayer()
+        shapeShadowLayer.path = shadowPath.cgPath
+        shapeShadowLayer.fillColor = UIColor.systemGray6.cgColor
+        view.layer.addSublayer(shapeShadowLayer)
         
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = UIColor.systemGray5.cgColor
+        shapeLayer.fillColor = UIColor(named: color)?.cgColor
         view.layer.addSublayer(shapeLayer)
+
+    }
+    
+    func circleSecond(view: UIView) {
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 30, y: 25), radius: 19, startAngle: 0, endAngle: .pi * 1, clockwise: true)
+        let circlePathShade = UIBezierPath(arcCenter: CGPoint(x: 30, y: 25), radius: 19, startAngle: 0, endAngle: .pi * 2, clockwise: true)
         
+        let chapterShapeLayerShade = CAShapeLayer()
+        chapterShapeLayerShade.path = circlePathShade.cgPath
+        chapterShapeLayerShade.fillColor = UIColor.clear.cgColor
+        chapterShapeLayerShade.strokeColor = UIColor.systemGray5.cgColor
+        chapterShapeLayerShade.lineWidth = 3
+        view.layer.addSublayer(chapterShapeLayerShade)
+        
+        let chapterShapeLayer = CAShapeLayer()
+        chapterShapeLayer.path = circlePath.cgPath
+        chapterShapeLayer.fillColor = UIColor.clear.cgColor
+        chapterShapeLayer.strokeColor = UIColor.white.cgColor
+        chapterShapeLayer.lineWidth = 3
+        view.layer.addSublayer(chapterShapeLayer)
+        
+       
     }
 }

@@ -17,13 +17,16 @@ class GamesCells: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        image.contentMode = .scaleAspectFill
+
     }
 
     func configure(category: QuizCategory) {
         percent.text = "\(Int(category.percent * 100))%"
         categoryName.text = category.category
         questionNum.text = "20 Questions"
-//        image.image = UIImage(named: category.category ?? "")
-        ColorConfigurations().circle(view: cellView, percent: category.percent * 2, color: category.categoryColor ?? "", label: percent)
+        print(category.miniImage ?? "+++++++++++++")
+        image.image = UIImage(named: category.miniImage ?? "")
+        ColorConfigurations().circle(view: cellView, percent: category.percent * 2, color: category.categoryColor ?? "")
     }
 }

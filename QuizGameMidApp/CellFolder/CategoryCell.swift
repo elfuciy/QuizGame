@@ -13,11 +13,11 @@ class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var categoryImage: UIImageView!
     @IBOutlet weak var categoryName: UILabel!
     @IBOutlet weak var question: UILabel!
+    @IBOutlet weak var cellView: UIView!
     
     var color = ""
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         categoryImage.contentMode = .scaleAspectFill
     }
     
@@ -25,6 +25,8 @@ class CategoryCell: UICollectionViewCell {
         categoryImage.image = UIImage(named: category.categoryImage ?? "")
         categoryName.text = category.category
         color = category.categoryColor ?? ""
+        ColorConfigurations().line(view: cellView, percent: category.percent, color: category.categoryColor ?? "")
+
     }
     
     

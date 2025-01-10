@@ -11,6 +11,7 @@ import CoreData
 class CategoryData {
     var context = AppDelegate().persistentContainer.viewContext
     var items = [QuizCategory]()
+    let username = UserDefaults.standard.string(forKey: "username")
     
     init(context: NSManagedObjectContext) {
         self.context = context
@@ -24,6 +25,7 @@ class CategoryData {
         data.percent = category.percent ?? 0
         data.user = category.user
         data.countNum = category.countNum ?? 0
+        data.miniImage = category.miniImage
         do {
             try context.save()
         } catch {
@@ -42,12 +44,17 @@ class CategoryData {
     
     func updateCategoryPercent(percent: Double, filterText: String, count: Int16) {
         do {
-            items = try context.fetch(QuizCategory.fetchRequest())
-            let item = items.filter { $0.category == filterText && $0.user == UserDefaults.standard.string(forKey: "username")}.first
+//            items = try context.fetch(QuizCategory.fetchRequest())
+            let item = items.filter { $0.category == filterText && $0.user == username }.first
             item?.percent = percent
             item?.countNum = count
-            print(items)
+            
             try context.save()
+            
+//            fetch(completion: { result in
+//                self.items = result
+//                print(items.filter { $0.category == filterText && $0.user == UserDefaults.standard.string(forKey: "username")}.first)
+//            })
         } catch {
             print(error.localizedDescription)
         }

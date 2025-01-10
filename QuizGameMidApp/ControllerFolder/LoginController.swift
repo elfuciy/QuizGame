@@ -32,8 +32,8 @@ class LoginController: UIViewController {
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
         if let nameField = nameField.text {
             UserDefaults.standard.set(nameField, forKey: "username")
-            let name = userArray.filter({ $0.username == nameField}).first?.username
-            print(name)
+//            let name = userArray.filter({ $0.username == nameField}).first?.username
+            print(userArray.filter({ $0.username == nameField}).first?.username)
             if userArray.filter({ $0.username == nameField}).first?.username == nil {
                 DataSaver().dataSave(name: nameField)
                 let user: UserModel = UserModel(username: nameField, point: 0)
