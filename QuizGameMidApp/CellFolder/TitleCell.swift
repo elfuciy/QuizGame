@@ -13,11 +13,11 @@ class TitleCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     func getText(text: String, size: CGFloat) {
         textField.text = text
-        textField.font = UIFont.systemFont(ofSize: size)
+        textField.font = UIFont.init(name: "Arial Rounded MT Bold", size: size)
+        
     }
 }

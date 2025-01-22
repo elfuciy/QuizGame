@@ -12,15 +12,20 @@ class WelcomePageController: UIViewController {
 
     @IBOutlet weak var bigText: UILabel!
     @IBOutlet weak var littleText: UILabel!
-
+    @IBOutlet weak var image: UIImageView!
+    
     
     var boldText = ""
     var colorConfigure = ColorConfigurations()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureUI()
+    }
+    
+    func configureUI() {
         colorConfigure.backgroundColor(view)
-   
+        image.image = UIImage(named: "mainImage")
         bigText.text = "Welcome \n to FunQuiz Game!"
         littleText.text = "Play, Learn, and Explore with Exciting Quizzes!"
     }
@@ -29,6 +34,5 @@ class WelcomePageController: UIViewController {
         let controller = storyboard?.instantiateViewController(identifier: "LoginController") as! LoginController
         navigationController?.pushViewController(controller, animated: true)
     }
-    
 }
 

@@ -24,7 +24,7 @@ class CategoryData {
         data.categoryImage = category.categoryimage
         data.percent = category.percent ?? 0
         data.user = category.user
-        data.countNum = category.countNum ?? 0
+        data.lastQuestion = category.countNum ?? 0
         data.miniImage = category.miniImage
         do {
             try context.save()
@@ -33,7 +33,7 @@ class CategoryData {
         }
     }
     
-    func fetch(completion: (([QuizCategory]) -> Void)) {
+    func fetch(completion: @escaping(([QuizCategory]) -> Void)) {
         do {
             items = try context.fetch(QuizCategory.fetchRequest())
             completion(items)
@@ -44,17 +44,12 @@ class CategoryData {
     
     func updateCategoryPercent(percent: Double, filterText: String, count: Int16) {
         do {
-//            items = try context.fetch(QuizCategory.fetchRequest())
             let item = items.filter { $0.category == filterText && $0.user == username }.first
             item?.percent = percent
-            item?.countNum = count
+            item?.lastQuestion = count
             
             try context.save()
             
-//            fetch(completion: { result in
-//                self.items = result
-//                print(items.filter { $0.category == filterText && $0.user == UserDefaults.standard.string(forKey: "username")}.first)
-//            })
         } catch {
             print(error.localizedDescription)
         }

@@ -17,7 +17,7 @@
         <attribute name="category" optional="YES" attributeType="String"/>
         <attribute name="categoryColor" optional="YES" attributeType="String"/>
         <attribute name="categoryImage" optional="YES" attributeType="String"/>
-        <attribute name="countNum" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lastQuestion" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="miniImage" optional="YES" attributeType="String"/>
         <attribute name="percent" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="user" optional="YES" attributeType="String"/>

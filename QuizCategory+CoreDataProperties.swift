@@ -2,7 +2,7 @@
 //  QuizCategory+CoreDataProperties.swift
 //  QuizGameMidApp
 //
-//  Created by Elsever on 07.01.25.
+//  Created by Elsever on 11.01.25.
 //
 //
 
@@ -19,10 +19,10 @@ extension QuizCategory {
     @NSManaged public var category: String?
     @NSManaged public var categoryColor: String?
     @NSManaged public var categoryImage: String?
-    @NSManaged public var countNum: Int16
+    @NSManaged public var lastQuestion: Int16
+    @NSManaged public var miniImage: String?
     @NSManaged public var percent: Double
     @NSManaged public var user: String?
-    @NSManaged public var miniImage: String?
 
 }
 

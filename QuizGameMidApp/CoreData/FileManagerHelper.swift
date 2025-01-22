@@ -23,7 +23,6 @@ class FileManagerHelper {
             let data = try JSONEncoder().encode(user)
             let path = getFilePath()
             try data.write(to: path)
-            print(path)
         } catch {
             print(error.localizedDescription)
         }

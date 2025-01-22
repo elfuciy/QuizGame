@@ -15,20 +15,21 @@ class CategoryCell: UICollectionViewCell {
     @IBOutlet weak var question: UILabel!
     @IBOutlet weak var cellView: UIView!
     
-    var color = ""
     override func awakeFromNib() {
         super.awakeFromNib()
+        configure()
+    }
+    
+    func configure() {
         categoryImage.contentMode = .scaleAspectFill
+        layer.cornerRadius = 12
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.systemGray6.cgColor
     }
     
     func configure(category: QuizCategory) {
         categoryImage.image = UIImage(named: category.categoryImage ?? "")
         categoryName.text = category.category
-        color = category.categoryColor ?? ""
         ColorConfigurations().line(view: cellView, percent: category.percent, color: category.categoryColor ?? "")
-
     }
-    
-    
-    
 }

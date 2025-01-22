@@ -32,10 +32,8 @@ class DataSaver {
         categories.saving(category: category5)
         
         categories.fetch(completion: { data in
-            categoryArray = data
+            self.categoryArray = data
         })
-    
-    
     }
     
     func questionsSave() {
@@ -622,8 +620,5 @@ class DataSaver {
         options.saving(options: option100)
         let question100 = QuestionsModel(answer: "A. Quantum Mechanics", points: 15, question: "Which branch of physics studies the behavior of particles at the atomic and subatomic level?", category: "Science Quiz", id: 100)
         questions.saving(question: question100)
-
-
-
     }
 }

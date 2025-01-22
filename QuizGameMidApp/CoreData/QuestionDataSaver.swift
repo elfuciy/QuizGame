@@ -29,7 +29,7 @@ class QuestionDataClass {
             print(error.localizedDescription)
         }
     }
-        
+    
     func fetching(completion: (([Questions]) -> Void)) {
         do {
             items = try context.fetch(Questions.fetchRequest())
@@ -37,16 +37,5 @@ class QuestionDataClass {
         } catch {
             print(error.localizedDescription)
         }
-        }
-    
-//    func updateQustion(filterText: String) {
-//        do {
-//            items = try context.fetch(Questions.fetchRequest())
-//            let item = items.filter { $0.answer == filterText }.first
-//            item?.isAnswered = true
-//            try context.save()
-//        } catch {
-//            print(error.localizedDescription)
-//        }
-//    }
+    }
 }

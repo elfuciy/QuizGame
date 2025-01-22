@@ -20,10 +20,6 @@ class ColorConfigurations {
         view.layer.insertSublayer(gradientLayer, at:0)
     }
     
-    func setImages(_ image: UIImageView, name: String) {
-        image.image = UIImage(named: name)
-    }
-    
     func circle(view: UIView, percent: Double, color: String) {
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: 327, y: 32), radius: 20, startAngle: 0, endAngle: .pi * percent, clockwise: true)
         let circlePathShade = UIBezierPath(arcCenter: CGPoint(x: 327, y: 32), radius: 20, startAngle: 0, endAngle: .pi * 2, clockwise: true)
@@ -49,7 +45,6 @@ class ColorConfigurations {
         let shadowPath = UIBezierPath(cgPath: UIBezierPath(roundedRect: CGRect(x: 90, y: 170, width: 85, height: 4), cornerRadius: 1).cgPath)
         let path = UIBezierPath(cgPath: UIBezierPath(roundedRect: CGRect(x: 90, y: 170, width: 85 * percent, height: 4), cornerRadius: 1).cgPath)
         
-        
         let shapeShadowLayer = CAShapeLayer()
         shapeShadowLayer.path = shadowPath.cgPath
         shapeShadowLayer.fillColor = UIColor.systemGray6.cgColor
@@ -62,14 +57,14 @@ class ColorConfigurations {
 
     }
     
-    func circleSecond(view: UIView) {
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 30, y: 25), radius: 19, startAngle: 0, endAngle: .pi * 1, clockwise: true)
-        let circlePathShade = UIBezierPath(arcCenter: CGPoint(x: 30, y: 25), radius: 19, startAngle: 0, endAngle: .pi * 2, clockwise: true)
+    func circleSecond(view: UIView, percent: Double) {
+        let circlePath = UIBezierPath(arcCenter: CGPoint(x: 30, y: 22), radius: 20, startAngle: 0, endAngle: .pi * (-percent), clockwise: false)
+        let circlePathShade = UIBezierPath(arcCenter: CGPoint(x: 30, y: 22), radius: 20, startAngle: 0, endAngle: .pi * 2, clockwise: true)
         
         let chapterShapeLayerShade = CAShapeLayer()
         chapterShapeLayerShade.path = circlePathShade.cgPath
         chapterShapeLayerShade.fillColor = UIColor.clear.cgColor
-        chapterShapeLayerShade.strokeColor = UIColor.systemGray5.cgColor
+        chapterShapeLayerShade.strokeColor = UIColor(named: "lightPurple")?.cgColor
         chapterShapeLayerShade.lineWidth = 3
         view.layer.addSublayer(chapterShapeLayerShade)
         
@@ -79,7 +74,5 @@ class ColorConfigurations {
         chapterShapeLayer.strokeColor = UIColor.white.cgColor
         chapterShapeLayer.lineWidth = 3
         view.layer.addSublayer(chapterShapeLayer)
-        
-       
     }
 }

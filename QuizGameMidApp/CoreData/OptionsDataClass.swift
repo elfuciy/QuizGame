@@ -37,5 +37,4 @@ class OptionsDataClass {
             print(error.localizedDescription)
         }
     }
-    
 }

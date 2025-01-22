@@ -11,8 +11,8 @@
 		3219922E2D267706002819D7 /* OptionsData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 321992292D267706002819D7 /* OptionsData+CoreDataProperties.swift */; };
 		329D0BFE2D2D213200AEA507 /* Questions+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D0BF92D2D213200AEA507 /* Questions+CoreDataClass.swift */; };
 		329D0BFF2D2D213200AEA507 /* Questions+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D0BFA2D2D213200AEA507 /* Questions+CoreDataProperties.swift */; };
-		329D0CB62D2DA2CE00AEA507 /* QuizCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D0CB52D2DA2CE00AEA507 /* QuizCategory+CoreDataProperties.swift */; };
-		329D0CB72D2DA2CE00AEA507 /* QuizCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 329D0CB42D2DA2CE00AEA507 /* QuizCategory+CoreDataClass.swift */; };
+		32E44AE12D322DD400A4836B /* QuizCategory+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E44AE02D322DD400A4836B /* QuizCategory+CoreDataProperties.swift */; };
+		32E44AE22D322DD400A4836B /* QuizCategory+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E44ADF2D322DD400A4836B /* QuizCategory+CoreDataClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +21,8 @@
 		329081A62D2291CA0095F6EE /* QuizGameMidApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizGameMidApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		329D0BF92D2D213200AEA507 /* Questions+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questions+CoreDataClass.swift"; sourceTree = "<group>"; };
 		329D0BFA2D2D213200AEA507 /* Questions+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Questions+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		329D0CB42D2DA2CE00AEA507 /* QuizCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuizCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
-		329D0CB52D2DA2CE00AEA507 /* QuizCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuizCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		32E44ADF2D322DD400A4836B /* QuizCategory+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuizCategory+CoreDataClass.swift"; sourceTree = "<group>"; };
+		32E44AE02D322DD400A4836B /* QuizCategory+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QuizCategory+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -60,8 +60,8 @@
 		3290819D2D2291CA0095F6EE = {
 			isa = PBXGroup;
 			children = (
-				329D0CB42D2DA2CE00AEA507 /* QuizCategory+CoreDataClass.swift */,
-				329D0CB52D2DA2CE00AEA507 /* QuizCategory+CoreDataProperties.swift */,
+				32E44ADF2D322DD400A4836B /* QuizCategory+CoreDataClass.swift */,
+				32E44AE02D322DD400A4836B /* QuizCategory+CoreDataProperties.swift */,
 				329D0BF92D2D213200AEA507 /* Questions+CoreDataClass.swift */,
 				329D0BFA2D2D213200AEA507 /* Questions+CoreDataProperties.swift */,
 				321992282D267706002819D7 /* OptionsData+CoreDataClass.swift */,
@@ -154,10 +154,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3219922C2D267706002819D7 /* OptionsData+CoreDataClass.swift in Sources */,
+				32E44AE12D322DD400A4836B /* QuizCategory+CoreDataProperties.swift in Sources */,
+				32E44AE22D322DD400A4836B /* QuizCategory+CoreDataClass.swift in Sources */,
 				329D0BFE2D2D213200AEA507 /* Questions+CoreDataClass.swift in Sources */,
 				329D0BFF2D2D213200AEA507 /* Questions+CoreDataProperties.swift in Sources */,
-				329D0CB62D2DA2CE00AEA507 /* QuizCategory+CoreDataProperties.swift in Sources */,
-				329D0CB72D2DA2CE00AEA507 /* QuizCategory+CoreDataClass.swift in Sources */,
 				3219922E2D267706002819D7 /* OptionsData+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
