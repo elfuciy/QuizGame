@@ -33,6 +33,7 @@ class FileManagerHelper {
             do {
                 let user = try JSONDecoder().decode([UserModel].self, from: data)
                 completion(user)
+                print(user)
                 
             } catch {
                 print(error.localizedDescription)

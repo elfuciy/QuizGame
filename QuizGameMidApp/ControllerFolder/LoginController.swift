@@ -22,29 +22,28 @@ class LoginController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        helper.readData { user in
-            userArray = user
-        }
     }
     
     func configureUI() {
         image.image = UIImage(named: "mainImage")
         colorConfigure.backgroundColor(view)
         errorLabel.isHidden = true
+        
+        helper.readData { user in
+            userArray = user
+        }
     }
     
     @IBAction func login(_ sender: Any) {
         UserDefaults.standard.set(true, forKey: "isLoggedIn")
         if let nameField = nameField.text {
             UserDefaults.standard.set(nameField, forKey: "username")
-            if userArray.filter({ $0.username == nameField}).first?.username?.lowercased() == nil {
+            if userArray.filter({ $0.username == nameField }).first?.username == nil {
                 DataSaver().dataSave(name: nameField)
                 let user: UserModel = UserModel(username: nameField, point: 0)
                 userArray.append(user)
                 helper.saveData(user: userArray)
             }
-        
-            
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let sceneDelegate = windowScene.delegate as? SceneDelegate else { return }
             sceneDelegate.startGame()

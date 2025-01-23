@@ -95,7 +95,7 @@ class QuizController: UIViewController {
                                                      filterText: modelView.selectedCategory ?? "",
                                                      count: Int16(modelView.answeredQuestionsNum))
         }
-        
+        modelView.getData()
         callBack?(modelView.categoryArray, modelView.userArray)
         navigationController?.popViewController(animated: true)
     }
@@ -155,7 +155,7 @@ extension QuizController {
             buttonViewShade.isHidden = false
             modelView.countPoints()
             modelView.helper.updatePoints(points: Int(modelView.points))
-            print("true")
+            print("true: \(modelView.points)")
         } else {
             hide()
             secondOption.textColor = UIColor.red

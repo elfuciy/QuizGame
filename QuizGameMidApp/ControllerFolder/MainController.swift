@@ -112,6 +112,7 @@ extension MainController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 self.modelView.categoryItemArray = self.modelView.categoryArray.filter({$0.percent > 0})
                 self.modelView.categoryItemArray.sort {$0.percent > $1.percent}
                 self.pointsLabel.text = "\(user[0].point ?? 0)"
+                print(user)
                 collectionView.reloadData()
             }
 
